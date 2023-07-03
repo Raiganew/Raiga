@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proveedores</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+
+<body>
+    <div class="nav-main" th:replace="nav :: nav"></div>
+    <div>
+        <div class="custom-margin">
+            <div class="position-absolute bottom-0 end-0">
+                <div class="btn-agregar">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        data-bs-whatever="@mdo">Agregar Proveedor
+                    </button>
+                </div>
+            </div>
+            <form th:action="@{/saveProveedor}" method="post">
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Registrar Proveedor</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="mb-3">
+                                        <label for="recipient-name" class="col-form-label">Proveedor:</label>
+                                        <input type="text" name="nombre" class="form-control" id="recipient-name">
+                                    </div>
+                                    <div class="mb-2">
+                                        <label for="recipient-name" class="col-form-label">documento:</label>
+                                        <input type="text" name="documento" class="form-control"
+                                            id="recipient-documento">
+                                    </div>
+                                    <div class="mb-2">
+                                        <label for="recipient-name" class="col-form-label">direccion:</label>
+                                        <input type="text" name="direccion" class="form-control"
+                                            id="recipient-direccion">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Registrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <h1 class="pruebas1 display-4 mb-4">Proveedores</h1>
+            <table id="table-productos" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Proveedor</th>
+                        <th scope="col">Documento</th>
+                        <th scope="col">Direccion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="proveedor: ${proveedores}">
+                        <td th:text="${proveedor.id}"></td>
+                        <td th:text="${proveedor.nombre}"></td>
+                        <td th:text="${proveedor.documento}"></td>
+                        <td th:text="${proveedor.direccion}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+
+</html>

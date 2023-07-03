@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+
+<body>
+    <div class="nav-main" th:replace="nav :: nav"></div>
+    <div>
+        <div class="custom-margin">
+            <div class="table">
+                <h1 class="pruebas1 display-4 mb-4">Tabla de productos</h1>
+                <table id="table-productos" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Stock</th>
+                            <th scope="col">
+                                <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                                    data-bs-target="#filtromodal" data-bs-whatever="@getbootstrap">Filtrar
+                                </button>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="producto: ${productos}" th:data-bs-id="${producto.id}"
+                            th:data-bs-tipoid="${producto.tipoDeProducto.id}"
+                            th:data-bs-proveedorid="${producto.proveedor.id}">
+                            <td th:text="${producto.id}"></td>
+                            <td th:text="${producto.nombre}"></td>
+                            <td th:text="${producto.valor}"></td>
+                            <td th:text="${producto.stock}"></td>
+                            <td>
+                                <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#myModal" th:data-bs-id="${producto.id}"
+                                    th:data-bs-nombre="${producto.nombre}" th:data-bs-valor="${producto.valor}"
+                                    th:data-bs-vencimiento="${producto.fechaVencimiento}"
+                                    th:data-bs-ingreso="${producto.fechaIngreso}" th:data-bs-iva="${producto.valorIva}"
+                                    th:data-bs-compra="${producto.valorCompra}"
+                                    th:data-bs-tipo="${producto.tipoDeProducto.nombre}"
+                                    th:data-bs-proveedor="${producto.proveedor.nombre}"
+                                    th:data-bs-stock="${producto.stock}">
+                                    Ver detalles
+                                </button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-primary editar-btn" th:data-bs-id="${producto.id}"
+                                    th:data-bs-nombre="${producto.nombre}" th:data-bs-valor="${producto.valor}"
+                                    th:data-bs-vencimiento="${producto.fechaVencimiento}"
+                                    th:data-bs-ingreso="${producto.fechaIngreso}" th:data-bs-iva="${producto.valorIva}"
+                                    th:data-bs-compra="${producto.valorCompra}"
+                                    th:data-bs-tipo="${producto.tipoDeProducto.id}"
+                                    th:data-bs-proveedor="${producto.proveedor.id}" th:data-bs-stock="${producto.stock}"
+                                    data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Editar
+                                </button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger elimniar-btn" data-bs-toggle="modal"
+                                    th:data-bs-id="${producto.id}" th:data-bs-nombre="${producto.nombre}"
+                                    data-bs-target="#eliminarModal">
+                                    Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div >
+                <div class="btn-agregar">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        data-bs-whatever="@mdo">Agregar Nuevo Proveedor
+                    </button>
+                </div>
+            </div>
+            <!-- Agregar Producto -->
+            <form th:action="@{/saveProducto}" method="post">
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Producto</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row mb-2">
+                                    <div class="col">
+                                        <label for="recipient-name" class="col-form-label">Nombre Del
+                                            Producto:</label>
+                                        <input type="text" name="nombre" class="form-control" id="recipient-name">
+                                    </div>
+                                    <div class="col">
+                                        <label for="recipient-name" class="col-form-label">Cantidad de
+                                            productos:</label>
+                                        <input type="text" name="stock" class="form-control" id="recipient-stock">
+                                    </div>
+                                </div>
+                                <div class="row mb-1">
+                                    <div class="col">
+                                        <label for="recipient-name" class="col-form-label">Valor De Venta:</label>
+                                        <input type="text" name="Valor" class="form-control" id="recipient-valor">
+                                    </div>
+                                    <div class="col">
+                                        <label for="recipient-name" class="col-form-label">Valor De Compra:</label>
+                                        <input type="text" name="valorCompra" class="form-control"
+                                            id="recipient-valorCompra">
+                                    </div>
+                                </div>
+                                <div class="row mb-1">
+                                    <div class="col">
+                                        <label for="fecha" class="col-form-label">Fecha de Vencimiento:</label>
+                                        <input type="date" name="fechaVencimiento" class="form-control"
+                                            id="recipient-fechaVencimiento">
+                                    </div>
+                                    <div class="col">
+                                        <label for="recipient-name" class="col-form-label">valorIva:</label>
+                                        <input type="text" name="valorIva" class="form-control" id="recipient-valorIva">
+                                    </div>
+                                </div>
+                                <div class="row mb-1">
+                                    <div class="col text-center">
+                                        <label for="recipient-proveedor" class="col-form-label">Proveedor</label>
+                                        <select name="proveedor" class="form-select" id="recipient-proveedor">
+                                        </select>
+                                    </div>
+                                    <div class="col text-center">
+                                        <label for="recipient-tipo-producto" class="col-form-label">Tipo de
+                                            producto</label>
+                                        <select name="tipoDeProducto" class="form-select" id="recipient-tipo-producto">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div>
+                                    <input type="text" name="id" hidden id="recipient-id">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-primary">Aceptar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="modal fade" id="filtromodal" tabindex="-1" aria-labelledby="filtromodalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="filtromodalLabel">Filtros</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="col text-center">
+                                    <label for="recipient-proveedor" class="col-form-label">Proveedor</label>
+                                    <select name="proveedor" class="form-select" id="recipient-proveedorF">
+                                    </select>
+                                </div>
+                                <div class="col text-center">
+                                    <label for="recipient-tipo-producto" class="col-form-label">Tipo de
+                                        producto</label>
+                                    <select name="tipoDeProducto" class="form-select" id="recipient-tipo-productoF">
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button id="aplicar-filtros-btn" type="button" class="btn btn-primary">Aplicar
+                                Filtros</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal para Eliminar-->
+            <form th:action="@{/eliminarProducto}" method="post">
+                <div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="eliminarModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="eliminarModalLabel">Desea Eliminar El Producto</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                                <input type="text" name="id" hidden id="recipient_eliminar_id">
+                            </div>
+                            <div class="modal-body">
+                                <label for="fecha" class="col-form-label">Producto</label>
+                                <input type="text" name="nombre" class="form-control" id="recipient_eliminar_name"
+                                    disabled>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">Detalles del producto</h4>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="modal-producto-id"></div>
+                            <div id="modal-producto-nombre"></div>
+                            <div id="modal-producto-valor"></div>
+                            <div id="modal-producto-stock"></div>
+                            <div id="modal-producto-fechaIngreso"></div>
+                            <div id="modal-producto-fechaVencimiento"></div>
+                            <div id="modal-producto-valorIva"></div>
+                            <div id="modal-producto-valorCompra"></div>
+                            <div id="modal-producto-tipoDeProducto"></div>
+                            <div id="modal-producto-proveedor"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var proveedores = /*[[${proveedores}]]*/[];
+        var tiposOrden = /*[[${tiposOrden}]]*/[];
+        /*]]>*/
+
+
+
+
+
+
+    </script>
+
+    <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/productos.js}"></script>
+</body>
+<div class="footer" th:replace="footer :: footer"></div>
+
+</html>
