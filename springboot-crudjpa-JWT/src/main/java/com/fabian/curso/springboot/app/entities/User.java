@@ -1,5 +1,6 @@
 package com.fabian.curso.springboot.app.entities;
 
+import com.fabian.curso.springboot.app.validation.ExistByUserName;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -17,9 +18,11 @@ public class User
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true)
+
+    @ExistByUserName
     @NotBlank
     @Size(min = 4, max = 12)
+    @Column(unique = true)
     private String nombre;
     @NotBlank
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

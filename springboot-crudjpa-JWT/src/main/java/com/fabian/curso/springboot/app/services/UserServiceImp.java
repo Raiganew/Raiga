@@ -47,4 +47,11 @@ public class UserServiceImp implements UserService
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepositoy.save(user);
     }
+
+    @Override
+    public boolean existByNombre(String nombre)
+    {
+        boolean response =userRepositoy.existsByNombre(nombre);
+        return response;
+    }
 }

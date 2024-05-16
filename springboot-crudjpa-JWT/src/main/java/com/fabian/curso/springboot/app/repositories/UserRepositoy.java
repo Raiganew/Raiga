@@ -5,4 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepositoy extends CrudRepository<User, Long>
 {
+    boolean existsByNombre(String nombre);
 }
