@@ -51,7 +51,6 @@ public class UserServiceImp implements UserService
     @Override
     public boolean existByNombre(String nombre)
     {
-        boolean response =userRepositoy.existsByNombre(nombre);
-        return response;
+        return userRepositoy.existsByNombre(nombre);
     }
 }

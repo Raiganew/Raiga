@@ -1,5 +1,6 @@
 package com.fabian.curso.springboot.app.entities;
 
+import com.fabian.curso.springboot.app.validation.ExistByUserName;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -12,6 +13,7 @@ public class Product
     private Long id;
 
     // A diferencia de NotEmpty aparte de validar el vacio valdia que no tenga espacion es blanco
+    @ExistByUserName
     @NotBlank(message = "{NotBlank.product.name}")
     @Size(min = 3,max = 20)
     private String name;
